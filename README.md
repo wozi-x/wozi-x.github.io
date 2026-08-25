@@ -16,4 +16,5 @@ curl -fsSL https://wozi-x.github.io/mac | bash
 ```
 
 Review the Gist before running it. It installs or updates Homebrew, Codex CLI,
-and GitHub CLI.
+the ChatGPT desktop app with Codex, and GitHub CLI. The desktop app is skipped
+on Intel Macs because OpenAI's current macOS build requires Apple Silicon.

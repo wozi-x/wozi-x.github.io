@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -eu
+
+# Stable shortcut for the canonical reviewed installer Gist.
+gist_url="https://gist.githubusercontent.com/wozi-x/3a9aea7de1296af6147bacaaae96f6fb/raw/install-codex-and-gh-macos.sh"
+curl -fsSL "${gist_url}?$(date +%s)" | /bin/bash

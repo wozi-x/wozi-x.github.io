@@ -3,11 +3,17 @@
 Run the installer on a new Mac:
 
 ```bash
-curl -fsSL https://wozi-x.github.io/mac | bash
+curl -fsSL wozi-x.github.io|sh
 ```
 
-The `/mac` endpoint is a small bootstrap that downloads and runs the canonical
+The site root delegates to `/mac`, which downloads and runs the canonical
 [installer Gist](https://gist.github.com/wozi-x/3a9aea7de1296af6147bacaaae96f6fb).
+
+The explicit endpoint remains available:
+
+```bash
+curl -fsSL https://wozi-x.github.io/mac | bash
+```
 
 Review the Gist before running it. It installs or updates Homebrew, Codex CLI,
 and GitHub CLI.

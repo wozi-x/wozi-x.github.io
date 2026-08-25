@@ -1,19 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>wozi-x macOS bootstrap</title>
-    <style>
-      :root { color-scheme: light dark; font-family: ui-monospace, monospace; }
-      body { max-width: 52rem; margin: 4rem auto; padding: 0 1.25rem; line-height: 1.6; }
-      code { display: block; overflow-x: auto; padding: 1rem; border: 1px solid #8886; border-radius: 0.5rem; }
-    </style>
-  </head>
-  <body>
-    <h1>macOS bootstrap</h1>
-    <p>Install or update Codex CLI and GitHub CLI:</p>
-    <code>curl -fsSL https://wozi-x.github.io/mac | bash</code>
-    <p><a href="https://gist.github.com/wozi-x/3a9aea7de1296af6147bacaaae96f6fb">Review the installer source</a></p>
-  </body>
-</html>
+#!/bin/sh
+
+set -eu
+
+# Shortest memorable entry point. Keep /mac as the canonical Pages bootstrap.
+curl -fsSL https://wozi-x.github.io/mac | /bin/sh

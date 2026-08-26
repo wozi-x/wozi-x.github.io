@@ -15,6 +15,6 @@ The explicit endpoint remains available:
 curl -fsSL https://wozi-x.github.io/mac | bash
 ```
 
-Review the Gist before running it. It installs or updates Homebrew, Codex CLI,
-the ChatGPT desktop app with Codex, and GitHub CLI. The desktop app is skipped
-on Intel Macs because OpenAI's current macOS build requires Apple Silicon.
+Review the Gist before running it. It installs or updates Homebrew, Chrome,
+1Password, the ChatGPT desktop app with Codex, and GitHub CLI; authenticates
+GitHub; then clones or updates PKGMacSetup and starts the full setup.

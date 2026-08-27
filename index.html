@@ -2,5 +2,29 @@
 
 set -eu
 
-# Shortest memorable entry point. Keep /mac as the canonical Pages bootstrap.
-curl -fsSL https://wozi-x.github.io/mac | /bin/sh
+# Backward-compatible site-root entry point. New documentation points directly
+# to /mac, but old commands still download fully before executing anything.
+bootstrap_url="https://wozi-x.github.io/mac"
+bootstrap_file="$(mktemp "${TMPDIR:-/tmp}/pkgmacsetup-relay.XXXXXX")"
+
+cleanup() {
+  rm -f -- "$bootstrap_file"
+}
+
+trap cleanup EXIT
+trap 'exit 1' HUP INT TERM
+
+curl --fail --silent --show-error --location \
+  --proto '=https' \
+  --proto-redir '=https' \
+  --tlsv1.2 \
+  --output "$bootstrap_file" \
+  "$bootstrap_url"
+
+[ -s "$bootstrap_file" ] || {
+  printf 'Error: downloaded bootstrap relay is empty.\n' >&2
+  exit 1
+}
+
+/bin/bash -n "$bootstrap_file"
+/bin/bash "$bootstrap_file"

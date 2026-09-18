@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -p
 
 set -eu
 
@@ -26,5 +26,5 @@ curl --fail --silent --show-error --location \
   exit 1
 }
 
-/bin/bash -n "$bootstrap_file"
-/bin/bash "$bootstrap_file"
+/bin/bash -p -n "$bootstrap_file"
+/bin/bash -p "$bootstrap_file"

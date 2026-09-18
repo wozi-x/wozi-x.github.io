@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash -p
 
 set -eu
 
 # Stable HTTPS shortcut for the canonical reviewed installer Gist. Download the
 # complete script before parsing or executing any of it.
-gist_url="https://gist.githubusercontent.com/wozi-x/3a9aea7de1296af6147bacaaae96f6fb/raw/install-codex-and-gh-macos.sh"
+installer_url="https://raw.githubusercontent.com/wozi-x/PKGMacSetupPublic/main/install.sh"
 installer_file="$(mktemp "${TMPDIR:-/tmp}/pkgmacsetup-public.XXXXXX")"
 
 cleanup() {
@@ -19,12 +19,12 @@ curl --fail --silent --show-error --location \
   --proto-redir '=https' \
   --tlsv1.2 \
   --output "$installer_file" \
-  "${gist_url}?$(date +%s)"
+  "${installer_url}?$(date +%s)"
 
 [ -s "$installer_file" ] || {
   printf 'Error: downloaded installer is empty.\n' >&2
   exit 1
 }
 
-/bin/bash -n "$installer_file"
-/bin/bash "$installer_file"
+/bin/bash -p -n "$installer_file"
+/bin/bash -p "$installer_file"

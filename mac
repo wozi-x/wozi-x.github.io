@@ -2,8 +2,8 @@
 
 set -eu
 
-# Stable HTTPS shortcut for the canonical reviewed installer Gist. Download the
-# complete script before parsing or executing any of it.
+# Stable HTTPS shortcut for the canonical reviewed public installer. Download
+# the complete script before parsing or executing any of it.
 installer_url="https://raw.githubusercontent.com/wozi-x/PKGMacSetupPublic/main/install.sh"
 installer_file="$(mktemp "${TMPDIR:-/tmp}/pkgmacsetup-public.XXXXXX")"
 

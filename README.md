@@ -1,19 +1,46 @@
-# wozi-x macOS bootstrap
+# Wozi public macOS setup
 
-Run the installer on a new Mac:
+The short URL downloads a complete, temporary checkout of the standalone public
+[PKGMacSetupPublic repository](https://github.com/wozi-x/PKGMacSetupPublic),
+checks its shell entrypoints, and then runs `install.sh`. It does not authenticate
+GitHub, download a private repository, or choose a configuration for you.
 
-```bash
-curl -fsSL https://wozi-x.github.io/mac | /bin/bash -p
+First prepare the reviewed controller prerequisites:
+
+```sh
+curl -fsSL https://wozi-x.github.io/mac |
+  /bin/bash -p -s -- --prepare
 ```
 
-Run from Terminal using your administrator account, without adding `sudo` to
-the command. Enter your Mac login password when the installer asks for it.
+Then preview and apply one complete public selection. For an Admin Mac:
 
-The `/mac` endpoint downloads the complete canonical installer from the public
-[PKGMacSetupPublic repository](https://github.com/wozi-x/PKGMacSetupPublic),
-checks its shell syntax, and only then executes it.
+```sh
+curl -fsSL https://wozi-x.github.io/mac |
+  /bin/bash -p -s -- --config examples/admin.yml --plan
+curl -fsSL https://wozi-x.github.io/mac |
+  /bin/bash -p -s -- --config examples/admin.yml --apply
+```
 
-Review the installer before running it. It installs or updates Homebrew, Chrome,
-1Password, the ChatGPT desktop app with Codex, and GitHub CLI; authenticates
-GitHub; then clones or updates PKGMacSetup and starts standard setup. Standard
-setup skips Mac App Store, private SMB, and DEVONthink database-restore tasks.
+For a development Mac, choose the complete example matching its purpose:
+
+```sh
+# iOS development
+curl -fsSL https://wozi-x.github.io/mac |
+  /bin/bash -p -s -- --config examples/ios-dev.yml --plan
+
+# Web development
+curl -fsSL https://wozi-x.github.io/mac |
+  /bin/bash -p -s -- --config examples/web-dev.yml --plan
+```
+
+Run these commands from the ordinary administrator account without adding
+`sudo`. `--prepare` has its own review and confirmation. `--plan` is offline,
+does not change the Mac, and normally exits with status 3 because it is a
+configuration-only preview. `--apply` observes the Mac, displays the concrete
+scope, and asks for confirmation and normal macOS authorization.
+
+For repeat use or a customized package selection, clone or download the public
+repository, copy the closest example YAML, and run `./install.sh` from that
+checkout. The public profiles are preferences, not credential permissions.
+Private personal components, NAS settings, Wozi integration, and private Admin/
+Dev selections remain in the separately prepared private setup repository.

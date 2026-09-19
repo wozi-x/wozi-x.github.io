@@ -2,13 +2,15 @@
 
 set -eu
 
-# Stable HTTPS shortcut for the canonical reviewed public installer. Download
-# the complete script before parsing or executing any of it.
-installer_url="https://raw.githubusercontent.com/wozi-x/PKGMacSetupPublic/main/install.sh"
-installer_file="$(mktemp "${TMPDIR:-/tmp}/pkgmacsetup-public.XXXXXX")"
+# Download a complete public checkout before running its entrypoint. The current
+# installer imports adjacent files and intentionally cannot run as one script.
+archive_url="https://github.com/wozi-x/PKGMacSetupPublic/archive/refs/heads/main.tar.gz"
+work_dir="$(mktemp -d "${TMPDIR:-/tmp}/pkgmacsetup-public.XXXXXX")"
+archive_file="${work_dir}/public.tar.gz"
+checkout_dir="${work_dir}/checkout"
 
 cleanup() {
-  rm -f -- "$installer_file"
+  rm -rf -- "$work_dir"
 }
 
 trap cleanup EXIT
@@ -18,13 +20,27 @@ curl --fail --silent --show-error --location \
   --proto '=https' \
   --proto-redir '=https' \
   --tlsv1.2 \
-  --output "$installer_file" \
-  "${installer_url}?$(date +%s)"
+  --output "$archive_file" \
+  "${archive_url}?$(date +%s)"
 
-[ -s "$installer_file" ] || {
-  printf 'Error: downloaded installer is empty.\n' >&2
+[ -s "$archive_file" ] || {
+  printf 'Error: downloaded public repository archive is empty.\n' >&2
   exit 1
 }
 
-/bin/bash -p -n "$installer_file"
-/bin/bash -p "$installer_file"
+mkdir -p "$checkout_dir"
+tar -xzf "$archive_file" --strip-components=1 -C "$checkout_dir"
+
+[ -f "$checkout_dir/install.sh" ] && [ -f "$checkout_dir/setup.sh" ] || {
+  printf 'Error: downloaded public repository archive is incomplete.\n' >&2
+  exit 1
+}
+
+/bin/bash -p -n "$checkout_dir/install.sh"
+/bin/bash -p -n "$checkout_dir/setup.sh"
+
+cd "$checkout_dir"
+if [ "$#" -eq 0 ]; then
+  set -- --help
+fi
+/bin/bash -p ./install.sh "$@"

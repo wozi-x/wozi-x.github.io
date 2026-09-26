@@ -1,46 +1,37 @@
-# Wozi public macOS setup
+# wozi-x macOS bootstrap
 
-The short URL downloads a complete, temporary checkout of the standalone public
-[PKGMacSetupPublic repository](https://github.com/wozi-x/PKGMacSetupPublic),
-checks its shell entrypoints, and then runs `install.sh`. It does not authenticate
-GitHub, download a private repository, or choose a configuration for you.
+Run the installer on a new Mac:
 
-First prepare the reviewed controller prerequisites:
+```bash
+curl -fsSL https://wozi-x.github.io/mac | /bin/bash -p
+```
+
+Run from Terminal using your administrator account, without adding `sudo` to
+the command. Enter your Mac login password when the installer asks for it.
+
+The `/mac` endpoint downloads the complete canonical
+[installer Gist](https://gist.github.com/wozi-x/3a9aea7de1296af6147bacaaae96f6fb),
+checks its shell syntax, and only then executes it.
+
+Review the Gist before running it. It prepares Command Line Tools, Homebrew,
+and GitHub CLI, guides browser sign-in, then offers **Base**, **Dev**, and
+**Admin**. Existing installations and a working GitHub login are reused.
+
+Base downloads a reviewed immutable revision of
+[PKGMacSetupPublic](https://github.com/wozi-x/PKGMacSetupPublic). It installs a
+small workstation baseline and selected macOS preferences. It never downloads
+the Dev/Admin repository. Dev and Admin require access to that repository and
+run its existing `./setup.sh` or `./setup.sh --admin-mac`; App Store and private
+storage remain separate stages.
+
+To use an existing local Base configuration directory, pass its absolute path
+to the shell running the starter, then select Base:
 
 ```sh
 curl -fsSL https://wozi-x.github.io/mac |
-  /bin/bash -p -s -- --prepare
+  PKGMACSETUP_BASE_CONFIG_DIR="$HOME/mac-setup" /bin/bash -p
 ```
 
-Then preview and apply one complete public selection. For an Admin Mac:
-
-```sh
-curl -fsSL https://wozi-x.github.io/mac |
-  /bin/bash -p -s -- --config examples/admin.yml --plan
-curl -fsSL https://wozi-x.github.io/mac |
-  /bin/bash -p -s -- --config examples/admin.yml --apply
-```
-
-For a development Mac, choose the complete example matching its purpose:
-
-```sh
-# iOS development
-curl -fsSL https://wozi-x.github.io/mac |
-  /bin/bash -p -s -- --config examples/ios-dev.yml --plan
-
-# Web development
-curl -fsSL https://wozi-x.github.io/mac |
-  /bin/bash -p -s -- --config examples/web-dev.yml --plan
-```
-
-Run these commands from the ordinary administrator account without adding
-`sudo`. `--prepare` has its own review and confirmation. `--plan` is offline,
-does not change the Mac, and normally exits with status 3 because it is a
-configuration-only preview. `--apply` observes the Mac, displays the concrete
-scope, and asks for confirmation and normal macOS authorization.
-
-For repeat use or a customized package selection, clone or download the public
-repository, copy the closest example YAML, and run `./install.sh` from that
-checkout. The public profiles are preferences, not credential permissions.
-Private personal components, NAS settings, Wozi integration, and private Admin/
-Dev selections remain in the separately prepared private setup repository.
+That directory stays local. Its Brewfile replaces Base's default package list;
+see the public repository for supported preferences and dotfile fragments.
+App Store purchases require manual sign-in when selected locally.

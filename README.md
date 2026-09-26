@@ -20,7 +20,9 @@ installations are reused.
 Base downloads a reviewed immutable revision of
 [PKGMacSetupPublic](https://github.com/wozi-x/PKGMacSetupPublic). It installs a
 small workstation baseline and selected macOS preferences without a GitHub
-account or sign-in. It never downloads the Dev/Admin repository. Dev and Admin
+account or GitHub sign-in. Its default Brewfile includes Amphetamine through
+the Mac App Store; sign in to the App Store before running Base.
+It never downloads the Dev/Admin repository. Dev and Admin
 reuse a working GitHub login or guide browser sign-in, require repository access, and
 run its existing `./setup.sh` or `./setup.sh --admin-mac`; App Store and private
 storage remain separate stages.
@@ -35,4 +37,4 @@ curl -fsSL https://wozi-x.github.io/mac |
 
 That directory stays local. Its Brewfile replaces Base's default package list;
 see the public repository for supported preferences and dotfile fragments.
-App Store purchases require manual sign-in when selected locally.
+App Store apps require manual sign-in, including the default Amphetamine entry.

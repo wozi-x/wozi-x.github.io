@@ -14,13 +14,14 @@ The `/mac` endpoint downloads the complete canonical
 checks its shell syntax, and only then executes it.
 
 Review the Gist before running it. It prepares Command Line Tools, Homebrew,
-and GitHub CLI, guides browser sign-in, then offers **Base**, **Dev**, and
-**Admin**. Existing installations and a working GitHub login are reused.
+and GitHub CLI, then offers **Base**, **Dev**, and **Admin**. Existing
+installations are reused.
 
 Base downloads a reviewed immutable revision of
 [PKGMacSetupPublic](https://github.com/wozi-x/PKGMacSetupPublic). It installs a
-small workstation baseline and selected macOS preferences. It never downloads
-the Dev/Admin repository. Dev and Admin require access to that repository and
+small workstation baseline and selected macOS preferences without a GitHub
+account or sign-in. It never downloads the Dev/Admin repository. Dev and Admin
+reuse a working GitHub login or guide browser sign-in, require repository access, and
 run its existing `./setup.sh` or `./setup.sh --admin-mac`; App Store and private
 storage remain separate stages.
 
